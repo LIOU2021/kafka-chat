@@ -1,0 +1,52 @@
+version: '3'
+services:
+  zookeeper:
+    image: docker.io/wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+
+  kafka1:
+    image: docker.io/wurstmeister/kafka
+    container_name: kafka1
+    restart: always
+    ports:
+      - "9095:9092"
+    depends_on:
+      - zookeeper
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9095
+
+  kafka2:
+    image: docker.io/wurstmeister/kafka
+    container_name: kafka2
+    restart: always
+    ports:
+      - "9096:9093"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9096
+
+  kafka3:
+    image: docker.io/wurstmeister/kafka
+    container_name: kafka3
+    restart: always
+    ports:
+      - "9097:9094"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9097
