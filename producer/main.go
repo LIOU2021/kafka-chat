@@ -6,11 +6,6 @@ import (
 	"github.com/IBM/sarama"
 )
 
-// $KAFKA_HOME/bin/kafka-topics.sh --describe --topic test --bootstrap-server localhost:9092
-// $KAFKA_HOME/bin/kafka-console-producer.sh --topic=test --broker-list localhost:9092
-// $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server  localhost:9092 --from-beginning --topic test
-// bin/kafka-topics.sh --describe --topic web_log --bootstrap-server localhost:9092
-
 var Topic = "web_log" //主题名称
 
 // 基于sarama第三方库开发的kafka client
