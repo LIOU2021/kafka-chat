@@ -23,5 +23,5 @@ $KAFKA_HOME/bin/kafka-topics.sh --zookeeper zookeeper:2181 --alter --topic web_l
 - client要訂閱的話，可以直接以消費者身分訂閱partition，多個client以此方式訂閱的話，就像是redis channel的訂閱依樣，所有客戶端都會收到一樣的訊息
 - client還可以用consumer group 的身分基礎去訂閱，如此一來群組成員的接收訊息就會不一致了，但該consumer group底下的所有consumer 收到的訊息彙總，就是完整的訂閱訊息了
 - 如果partition只有1個，那麼採用consumer group的情況下，該group如果有兩個(包含)以上的成員，就永遠只會有特定人會收到訊息
-- 如果partition有1個以上，consumer group底下不同成員間都會收到片段訊息。因為每個成員都是訂閱不同的partition的概念。不同的consumer group可以訂閱相同的topic或是consumer，但同一consumer group底下的成員不能訂閱重複的partition
+- 如果partition有1個以上，consumer group底下不同成員間都會收到片段訊息。因為每個成員都是訂閱不同的partition的概念。不同的consumer group可以訂閱相同的topic或是partition，但同一consumer group底下的成員不能訂閱重複的partition
 - broker其實就是kafka架設了幾個服務
