@@ -3,14 +3,14 @@ services:
   zookeeper:
     image: docker.io/wurstmeister/zookeeper
     container_name: zookeeper
-    restart: always
+    # restart: always
     ports:
       - "2181:2181"
 
   kafka1:
     image: docker.io/wurstmeister/kafka
     container_name: kafka1
-    restart: always
+    # restart: always
     ports:
       - "9095:9092"
     depends_on:
@@ -26,7 +26,7 @@ services:
   kafka2:
     image: docker.io/wurstmeister/kafka
     container_name: kafka2
-    restart: always
+    # restart: always
     ports:
       - "9096:9093"
     depends_on:
@@ -40,7 +40,7 @@ services:
   kafka3:
     image: docker.io/wurstmeister/kafka
     container_name: kafka3
-    restart: always
+    # restart: always
     ports:
       - "9097:9094"
     depends_on:
@@ -50,3 +50,14 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://host.docker.internal:9097
+
+  go:
+    image: golang:1.20
+    container_name: go
+    # restart: always
+    volumes:
+      - ./go:/workspace
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+      
