@@ -24,7 +24,9 @@ func main() {
 	fmt.Println(partitionList)
 	for partition := range partitionList { // 遍历所有的分区
 		// 针对每个分区创建一个对应的分区消费者
-		pc, err := consumer.ConsumePartition(Topic, int32(partition), sarama.OffsetNewest)
+		pc, err := consumer.ConsumePartition(Topic, int32(partition), sarama.OffsetNewest) // 新消費者上線後只會讀取最新訊息
+		// pc, err := consumer.ConsumePartition(Topic, int32(partition), sarama.OffsetOldest) // 新消費者上線後會從第一則訊息開始讀
+		// pc, err := consumer.ConsumePartition(Topic, int32(partition), 2) // 指定從offset 2 開始讀，要注意是不是該partition下有這個位置
 		if err != nil {
 			fmt.Printf("failed to start consumer for partition %d,err:%v\n", partition, err)
 			return
@@ -39,6 +41,3 @@ func main() {
 	}
 	select {} //阻塞进程
 }
-
-// 問題
-// 1. 消費者群組在哪?我以為可以listen消費者群組，或是有個群組id

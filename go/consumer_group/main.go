@@ -71,6 +71,9 @@ func main() {
 	config := sarama.NewConfig()
 	config.Version = version
 
+	// config預設訊息只會讀取最新的
+	// c.Consumer.Offsets.Initial = OffsetNewest
+
 	switch assignor {
 	case "sticky":
 		config.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategySticky()}
@@ -191,7 +194,8 @@ func (consumer *Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, clai
 				log.Printf("message channel was closed")
 				return nil
 			}
-			log.Printf("Message claimed: value = %s, timestamp = %v, topic = %s", string(message.Value), message.Timestamp, message.Topic)
+
+			log.Printf("Message claimed: partition = %d, offset = %d, value = %s, timestamp = %v, topic = %s", message.Partition, message.Offset, string(message.Value), message.Timestamp, message.Topic)
 			session.MarkMessage(message, "")
 		// Should return when `session.Context()` is done.
 		// If not, will raise `ErrRebalanceInProgress` or `read tcp <ip>:<port>: i/o timeout` when kafka rebalance. see:
