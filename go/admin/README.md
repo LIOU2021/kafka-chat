@@ -1,0 +1,1 @@
+- [admin 操作接口在這]https://pkg.go.dev/github.com/IBM/sarama#ClusterAdmin
