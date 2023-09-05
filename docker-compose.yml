@@ -1,5 +1,18 @@
 version: '3'
 services:
+  kafka-ui:
+    # restart: always
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8080:8080
+    depends_on:
+      - kafka1
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092
+    # volumes:
+    #   - config.yml:/etc/kafkaui/dynamic_config.yaml
   zookeeper:
     image: docker.io/wurstmeister/zookeeper
     container_name: zookeeper

@@ -6,10 +6,13 @@
     - [docker 配置 kafka+zookeeper，golang操作kafka](https://blog.51cto.com/u_6192297/3299886)
     - [Kafka 生产者和消费者学习笔记](https://leehao.me/Kafka-%E7%94%9F%E4%BA%A7%E8%80%85%E5%92%8C%E6%B6%88%E8%B4%B9%E8%80%85%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/)
     - [kafka笔记](https://juejin.cn/post/6844903887149760526)
+- gui
+    - https://github.com/provectus/kafka-ui
 
 # tip
 - 我是在windows上測試的
 - ./go/consumer_group的這個環境沒法在windows模擬，因為win沒有SIGUSR1訊號，所以我是透過docker在容器內執行測試這個容器的
+- 访问GUI http://localhost:8080
 
 # kafka cli
 ```sh
@@ -29,7 +32,7 @@ $KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
 # 刪除topic
 $KAFKA_HOME/bin/kafka-topics.sh --delete --topic web_log --zookeeper zookeeper:2181
 # 生產者傳送訊息
-$KAFKA_HOME/bin/kafka-console-producer.sh --topic web_log --bootstrap-server kafka1:9094,kafka2:9093,kafka3:9094
+$KAFKA_HOME/bin/kafka-console-producer.sh --topic web_log --bootstrap-server kafka1:9092,kafka2:9093,kafka3:9094
 # 消費者接收訊息
 $KAFKA_HOME/bin/kafka-console-consumer.sh --topic web_log --from-beginning --bootstrap-server host.docker.internal:9095,host.docker.internal:9096,host.docker.internal:9097
 ```
